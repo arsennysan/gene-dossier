@@ -1,5 +1,9 @@
 # Gene Dossier
 
+[![tests](https://github.com/arsennysan/gene-dossier/actions/workflows/tests.yml/badge.svg)](https://github.com/arsennysan/gene-dossier/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Live site](https://img.shields.io/badge/live-gene--dossier.vercel.app-0a7466)](https://gene-dossier.vercel.app)
+
 **Everything about a gene on one page — in Kazakh, Russian and English.**
 
 Type a gene symbol (TP53, BRCA1, CFTR…) and get a single dossier assembled live from eight public biological databases: what the gene does, where it is active, which diseases and variants are linked to it, its protein partners, its predicted 3D structure and the latest papers. An optional AI summary retells the page in plain language.
@@ -54,6 +58,7 @@ style.css    design tokens (light/dark), layout, print styles
 i18n.js      all interface strings in kk / ru / en
 app.js       data fetching, rendering, comparison, export
 api/ai.js    serverless AI endpoint (Gemini / Anthropic / Vercel AI Gateway)
+tests/       jsdom page tests, AI endpoint tests, recorded database fixtures
 ```
 
 ## Run locally
@@ -67,6 +72,18 @@ python -m http.server 8000
 ```
 
 Open http://localhost:8000. Database sections work locally; the AI buttons call the deployed endpoint.
+
+## Tests
+
+```bash
+npm ci
+npm test
+```
+
+25 tests run on Node's built-in test runner, and GitHub Actions repeats them on Node 20, 22 and 24 for every push.
+
+- **`tests/page.test.js`** loads the real `index.html`, `i18n.js` and `app.js` in [jsdom](https://github.com/jsdom/jsdom). Every database answer comes from recorded fixtures (`tests/fixtures.js`), so the tests need no network. They cover the full TP53 dossier, expert vs student mode (cytoband explanation, PubMed links), the Kazakh/English switch, ClinVar class counts and review-star ordering, the spacing of NCBI requests, network navigation, gene comparison, the AI summary with its browser cache, translation and Markdown export.
+- **`tests/ai.test.js`** calls the serverless function with a fake Gemini. It covers origin checks, input validation, prompt construction, fallback to another model on overload, JSON extraction, model pinning, the "not configured" case and the per-IP rate limit.
 
 ## Deploy your own copy
 
