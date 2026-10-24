@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Gene Dossier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=Unbounded:wght@500;700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <div class="brand"><b>Gene<i>·</i>Dossier</b><span id="tagline"></span></div>
+    <div class="controls">
+      <div class="seg" id="langSeg" role="group" aria-label="Language">
+        <button type="button" data-lang="kk">ҚАЗ</button>
+        <button type="button" data-lang="ru">РУС</button>
+        <button type="button" data-lang="en">ENG</button>
+      </div>
+      <div class="seg" id="modeSeg" role="group" aria-label="Mode">
+        <button type="button" data-mode="expert"></button>
+        <button type="button" data-mode="student"></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="search-band">
+    <div class="wrap">
+      <form id="searchForm" class="search-row" autocomplete="off">
+        <div class="combo">
+          <input id="q" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggest" spellcheck="false">
+          <ul id="suggest" class="suggest" role="listbox" hidden></ul>
+        </div>
+        <select id="species" aria-label="Species"></select>
+        <button class="btn primary" id="go" type="submit"></button>
+      </form>
+      <div class="tries" id="tries"></div>
+      <div class="note" id="dataNote"></div>
+    </div>
+  </section>
+  <section class="wrap">
+    <div id="tools" class="tools" hidden>
+      <form id="cmpForm" autocomplete="off">
+        <input id="cmpQ" type="text" spellcheck="false" aria-label="Compare">
+        <button class="btn slim" id="cmpGo" type="submit"></button>
+      </form>
+      <div class="exp">
+        <button class="btn slim" id="expMd" type="button"></button>
+        <button class="btn slim" id="expPdf" type="button"></button>
+      </div>
+    </div>
+    <div id="dossier" class="dossier"></div>
+  </section>
+</main>
+
+<footer><div class="wrap" id="foot"></div></footer>
+
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
